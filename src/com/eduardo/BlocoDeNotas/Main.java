@@ -8,6 +8,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JFileChooser;
+import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JMenu;
@@ -72,6 +73,10 @@ public class Main extends JFrame implements ActionListener {
         textArea.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
         textArea.setLineWrap(isLineWrap);
         textArea.setWrapStyleWord(true);
+        textArea.setBorder(BorderFactory.createCompoundBorder(
+                textArea.getBorder(),
+                BorderFactory.createEmptyBorder(3, 5, 5, 5)
+        ));
 
         scrollPane = new JScrollPane(textArea);
         scrollPane.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
@@ -269,7 +274,7 @@ public class Main extends JFrame implements ActionListener {
         if (!isDocumentSaved) {
             String[] options = {"Salvar", "Não Salvar", "Cancelar"};
             int response = JOptionPane.showOptionDialog(
-                    this, "Deseja salvar as alterações em " + fileTitle + "?",
+                    null, "Deseja salvar as alterações em " + fileTitle + "?",
                     "Bloco de notas", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, 0
             );
 
