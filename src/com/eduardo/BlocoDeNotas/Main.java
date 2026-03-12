@@ -38,6 +38,7 @@ public class Main extends JFrame implements ActionListener {
 
     // MenuBar
 
+    private final JMenuItem newFileItem = new JMenuItem("Novo");
     private final JMenuItem openNewFileItem = new JMenuItem("Nova janela");
     private final JMenuItem saveMenuItem = new JMenuItem("Salvar");
     private final JMenuItem openMenuItem = new JMenuItem("Abrir...");
@@ -53,11 +54,16 @@ public class Main extends JFrame implements ActionListener {
     // Vars
     private boolean isLineWrap = false;
 
-    Main() {
+    /*
+        Parâmetro parentObject é um parente JFrame caso seja criado um objeto Main
+        através de outro objeto da mesma classe, caso contrário chamar construtor Main com
+        parâmetro null.
+    */
+    Main(JFrame parentObject) {
         updateDocumentTitle(fileTitle);
         this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(parentObject);
         this.setMinimumSize(new Dimension(300, 400));
         this.setLayout(new BorderLayout());
 
@@ -87,6 +93,7 @@ public class Main extends JFrame implements ActionListener {
         JMenu editMenu = new JMenu("Editar");
         JMenu formatMenu = new JMenu("Formatar");
 
+        newFileItem.addActionListener(this);
         openNewFileItem.addActionListener(this);
         saveMenuItem.addActionListener(this);
         openMenuItem.addActionListener(this);
@@ -94,6 +101,7 @@ public class Main extends JFrame implements ActionListener {
 
         isLineWrapMenuItem.addActionListener(this);
 
+        fileMenu.add(newFileItem);
         fileMenu.add(openNewFileItem);
         fileMenu.add(saveMenuItem);
         fileMenu.add(openMenuItem);
@@ -147,8 +155,12 @@ public class Main extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == openNewFileItem) {
-            new Main();
+        if (e.getSource() == newFileItem) {
+            documentClosing();
+            new Main(null);
+        }
+        else if (e.getSource() == openNewFileItem) {
+            new Main(this);
         }
         else if (e.getSource() == saveMenuItem) {
             saveDocument();
@@ -281,9 +293,11 @@ public class Main extends JFrame implements ActionListener {
             if (response == 0) {
                 saveDocument();
             }
-            else if (response == 1) {
-                this.dispose();
+            else if (response == 2 || response == -1) {
+                return;
             }
+
+            this.dispose();
 
             return;
         }
@@ -292,6 +306,6 @@ public class Main extends JFrame implements ActionListener {
     }
 
     public static void main() {
-        new Main();
+        new Main(null);
     }
 }
