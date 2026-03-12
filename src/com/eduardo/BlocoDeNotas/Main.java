@@ -30,7 +30,6 @@ import java.util.Scanner;
 public class Main extends JFrame implements ActionListener {
 
     // JFrame
-    private final JFrame frame = this;
     private final int FRAME_WIDTH = 1050;
     private final int FRAME_HEIGHT = 750;
     private File documentFile = null;
@@ -38,12 +37,8 @@ public class Main extends JFrame implements ActionListener {
     private String fileTitle = "Sem título";
 
     // MenuBar
-    private final JMenuBar menuBar = new JMenuBar();
-    private final JMenu fileMenu = new JMenu("Arquivo");
-    private final JMenu editMenu = new JMenu("Editar");
-    private final JMenu formatMenu = new JMenu("Formatar");
 
-    private final JMenuItem openNewFileItem = new JMenuItem("Abrir janela");
+    private final JMenuItem openNewFileItem = new JMenuItem("Nova janela");
     private final JMenuItem saveMenuItem = new JMenuItem("Salvar");
     private final JMenuItem openMenuItem = new JMenuItem("Abrir...");
     private final JMenuItem exitMenuItem = new JMenuItem("Sair");
@@ -52,8 +47,8 @@ public class Main extends JFrame implements ActionListener {
 
     // Components
     private final JTextArea textArea = new JTextArea();
+    private final JScrollPane scrollPane;
     private String initialTextArea = "";
-    private JScrollPane scrollPane;
 
     // Vars
     private boolean isLineWrap = false;
@@ -86,6 +81,11 @@ public class Main extends JFrame implements ActionListener {
         this.add(scrollPane, BorderLayout.CENTER);
 
         /* MenuBar */
+
+        JMenuBar menuBar = new JMenuBar();
+        JMenu fileMenu = new JMenu("Arquivo");
+        JMenu editMenu = new JMenu("Editar");
+        JMenu formatMenu = new JMenu("Formatar");
 
         openNewFileItem.addActionListener(this);
         saveMenuItem.addActionListener(this);
@@ -291,7 +291,7 @@ public class Main extends JFrame implements ActionListener {
         this.dispose();
     }
 
-    public static void main(String[] args) {
+    public static void main() {
         new Main();
     }
 }
